@@ -9,7 +9,7 @@ on:
 env:
   OIDC_PROVIDER_NAME: ${{ secrets.OIDC_PROVIDER_NAME }}
   JF_URL: https://${{ vars.JF_URL }}
-  JF_REGISTRY: https://${{ vars.JF_URL }}/${{ vars.JF_REGISTRY }}
+  JF_REGISTRY: ${{ vars.JF_REGISTRY }}
   IMAGE_NAME: dvr-app
   BUILD_NAME: dvr-build
 
@@ -38,7 +38,7 @@ jobs:
       - name: Docker login
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.JF_REGISTRY }}
+          registry: https://${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}
           username: ${{ steps.setup-jfrog-cli.outputs.oidc-user }}
           password: ${{ steps.setup-jfrog-cli.outputs.oidc-token }}
 
@@ -51,7 +51,7 @@ jobs:
         with:
           context: ./dvr-app
           push: true
-          tags: ${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
+          tags: ${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
           build-args: ${{ env.BUILD_ARGS }}
 
       - name: Attest docker image
