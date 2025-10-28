@@ -1,0 +1,14 @@
+{
+    "name": "Custom value in predicate template",
+    "description": "This template looks for a specific key to have value true in all predicates",
+    "version": "1.0.0",
+    "data_source_type": "evidence",
+    "scanners": [
+        "evidence"
+    ],
+    "category": "workflow",
+    "is_custom": false,
+    "rego": "package curation.policies\n\nimport rego.v1\n\nrelease := input.data\n\nrelease_evidence := [evidence | some evidence in release.evidenceConnection[_]]\n\nartifact_evidence := [evidence.node.evidenceConnection[_][_] | some evidence in release.artifactsConnection[_]]\n\nbuild_evidence := [evidence.evidenceConnection[_][_] | some evidence in release.fromBuilds[_]]\n\nall_layers_evidences := array.concat(release_evidence, array.concat(artifact_evidence, build_evidence))\n\ndefault exists := false\n\ndefault has_approved_key := []\n\nhas_approved_key := [evidence | \n    some evidence in artifact_evidence\n    evidence.node.is_approved == true\n]\n\nexists if {\n\tcount(has_approved_key) > 0\n}\n\nallow := {\n\t\"should_allow\": exists\n}",
+    "created_by": "system",
+    "parameters": null
+}
