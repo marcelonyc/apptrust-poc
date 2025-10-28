@@ -48,7 +48,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build and push Docker image
+      - name: Build Docker image
         id: build-and-push
         uses: docker/build-push-action@v6
         with:
@@ -61,9 +61,9 @@ jobs:
         run: |
           jf docker tag ${{ steps.build-and-push.outputs.imageid }} ${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
 
-          jf docker push --project ${JFROG_CLI_BUILD_PROJECT} \
-           --build-name ${JFROG_CLI_BUILD_NAME} --build-number ${JFROG_CLI_BUILD_NUMBER} \
-           ${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}  ${{ env.JF_REGISTRY }}
+          jf docker push ${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}  ${{ env.JF_REGISTRY }} \
+          --project ${JFROG_CLI_BUILD_PROJECT} \
+          --build-name ${JFROG_CLI_BUILD_NAME} --build-number ${JFROG_CLI_BUILD_NUMBER}
 
       - name: Attest docker image
         uses: actions/attest-build-provenance@v2
