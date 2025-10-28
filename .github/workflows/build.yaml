@@ -12,6 +12,9 @@ env:
   JF_REGISTRY: ${{ vars.JF_REGISTRY }}
   IMAGE_NAME: dvr-app
   BUILD_NAME: dvr-build
+  JFROG_CLI_BUILD_NAME: dvr-build
+  JFROG_CLI_BUILD_NUMBER: ${{ github.run_number }}
+  JFROG_CLI_BUILD_PROJECT: dvr
 
 jobs:
   build-test-deploy:
@@ -50,9 +53,15 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ./dvr-app
-          push: true
+          push: false
           tags: ${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
           build-args: ${{ env.BUILD_ARGS }}
+
+      - name: Push image to JFrog Artifactory
+        run: |
+          jf rt docker-push --project ${JFROG_CLI_BUILD_PROJECT} \
+           --build-name ${JFROG_CLI_BUILD_NAME} --build-number ${JFROG_CLI_BUILD_NUMBER} \
+           ${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}  ${{ env.JF_REGISTRY }}
 
       - name: Attest docker image
         uses: actions/attest-build-provenance@v2
