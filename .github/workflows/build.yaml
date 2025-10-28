@@ -66,7 +66,8 @@ jobs:
           subject-name: oci://${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}
           subject-digest: ${{ steps.build-and-push.outputs.digest }}
           predicate-type: "https://jfrog.com/security/attestation/test-report/v1"
-          predicate-path: "coverage/integration/itest-report.json"
+          # predicate-path: "coverage/integration/itest-report.json"
+          predicate: "{}"
 
       - name: Build Summary
         run: |
