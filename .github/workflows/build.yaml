@@ -58,6 +58,7 @@ jobs:
           build-args: ${{ env.BUILD_ARGS }}
 
       - name: Push image to JFrog Artifactory
+        id: push-to-artifactory
         run: |
           jf docker tag ${{ steps.build-and-push.outputs.imageid }} ${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
 
@@ -68,13 +69,13 @@ jobs:
       - name: Attest docker image
         uses: actions/attest-build-provenance@v2
         with:
-          subject-name: oci://${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
+          subject-name: oci://${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}
           subject-digest: ${{ steps.build-and-push.outputs.digest }}
 
       - name: Attest integration tests report
         uses: actions/attest@v2
         with:
-          subject-name: oci://${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
+          subject-name: oci://${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}
           subject-digest: ${{ steps.build-and-push.outputs.digest }}
           predicate-type: "https://jfrog.com/security/attestation/test-report/v1"
           # predicate-path: "coverage/integration/itest-report.json"
@@ -83,10 +84,14 @@ jobs:
       - name: Attest promotion
         uses: actions/attest@v2
         with:
-          subject-name: oci://${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
-          subject-digest: ${{ steps.build-and-push.outputs.digest }}
+          subject-name: oci://${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}
+          subject-digest: ${{ steps.push-to-artifactory.outputs.digest }}
           predicate-type: "https://jfrog.com/evidence/signature/v1"
           predicate-path: "dvr-app/sign.json"
+
+      # - name: Publish to Application
+      #   env:
+      #     IMAGE_TAG: ${{ github.run_number }}
 
       - name: Build Summary
         run: |
