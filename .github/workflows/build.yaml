@@ -81,13 +81,13 @@ jobs:
           # predicate-path: "coverage/integration/itest-report.json"
           predicate: "{}"
 
-      - name: Attest promotion
-        uses: actions/attest@v2
-        with:
-          subject-name: oci://${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}
-          subject-digest: ${{ steps.push-to-artifactory.outputs.digest }}
-          predicate-type: "https://jfrog.com/evidence/signature/v1"
-          predicate-path: "dvr-app/sign.json"
+      # - name: Attest promotion
+      #   uses: actions/attest@v2
+      #   with:
+      #     subject-name: oci://${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}
+      #     subject-digest: ${{ steps.push-to-artifactory.outputs.digest }}
+      #     predicate-type: "https://jfrog.com/evidence/signature/v1"
+      #     predicate-path: "dvr-app/sign.json"
 
       # - name: Publish to Application
       #   env:
