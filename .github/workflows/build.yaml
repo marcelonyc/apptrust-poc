@@ -8,7 +8,7 @@ on:
 
 env:
   OIDC_PROVIDER_NAME: ${{ secrets.OIDC_PROVIDER_NAME }}
-  JF_URL: ${{ secrets.JF_URL }}
+  JF_URL: https://${{ secrets.JF_URL }}
   JF_REGISTRY: ${{ secrets.JF_REGISTRY }}
   IMAGE_NAME: dvr-app
   BUILD_NAME: dvr-build
