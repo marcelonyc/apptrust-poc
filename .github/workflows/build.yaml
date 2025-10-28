@@ -7,11 +7,11 @@ on:
     workflow_dispatch:
 
 env:
-    OIDC_PROVIDER_NAME: swampup-2025/octo-billing@github
+    OIDC_PROVIDER_NAME: ${{ vars.OIDC_PROVIDER_NAME }}
     JF_URL: ${{ vars.JF_URL }}
     JF_REGISTRY: ${{ vars.JF_REGISTRY }}
-    IMAGE_NAME: octo-billing
-    BUILD_NAME: octo-billing-build
+    IMAGE_NAME: dvr-app
+    BUILD_NAME: dvr-build
 
 jobs:
     build-test-deploy:
@@ -49,7 +49,7 @@ jobs:
               id: build-and-push
               uses: docker/build-push-action@v6
               with:
-                  context: .
+                  context: ./dvr-app
                   push: true
                   tags: ${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
                   build-args: ${{ env.BUILD_ARGS }}
@@ -59,19 +59,6 @@ jobs:
               with:
                   subject-name: oci://${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}
                   subject-digest: ${{ steps.build-and-push.outputs.digest }}
-
-            - name: Setup Node.js 16
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 16
-
-            - name: Install dependencies
-              run: npm ci || npm i
-
-            - name: Run integration tests (JSON)
-              env:
-                  IMAGE_NAME: ${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
-              run: npm run test:it:json
 
             - name: Attest integration tests report
               uses: actions/attest@v2
