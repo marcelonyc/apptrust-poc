@@ -80,6 +80,14 @@ jobs:
           # predicate-path: "coverage/integration/itest-report.json"
           predicate: "{}"
 
+      - name: Attest promotion
+        uses: actions/attest@v2
+        with:
+          subject-name: oci://${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}
+          subject-digest: ${{ steps.build-and-push.outputs.digest }}
+          predicate-type: "https://jfrog.com/evidence/signature/v1"
+          predicate-path: "dvr-app/sign.json"
+
       - name: Build Summary
         run: |
           pkgName="${{ env.IMAGE_NAME }}/${{ github.run_number }}"
