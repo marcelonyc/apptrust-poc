@@ -1,0 +1,14 @@
+{
+    "version": "'$APP_VERSION'",
+    "tag": "'$APP_TAG'",
+    "sources": {
+        "builds": [
+            {
+                "name": "'$ACTUAL_BUILD_NAME'",
+                "number": "'$ACTUAL_BUILD_NUMBER'",
+                "repository_key": "'${JF_PROJECT}'-build-info",
+                "include_dependencies": false
+            }
+        ]
+    }
+}
