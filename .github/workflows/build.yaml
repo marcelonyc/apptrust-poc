@@ -65,16 +65,32 @@ jobs:
           --project ${JFROG_CLI_BUILD_PROJECT} \
           --build-name ${JFROG_CLI_BUILD_NAME} --build-number ${JFROG_CLI_BUILD_NUMBER}
 
+      - name: Attach evidence
+        env:
+          IMAGE_NAME: ${{ env.IMAGE_NAME }}
+          VERSION: ${{ github.run_number }}
+          DOCKER_REPO: ${{ env.JF_REGISTRY }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+        run: |
+          jf evd create \
+           --package-name ${IMAGE_NAME} \
+           --package-version "${VERSION}" \
+           --package-repo-name ${DOCKER_REPO} \
+           --predicate ./sign.json \
+           --predicate-type https://jfrog.com/evidence/signature/v1 \
+           --key "${PRIVATE_KEY}" \
+           --key-alias "evd"
+
       - name: Attest docker image
         uses: actions/attest-build-provenance@v2
         with:
-          subject-name: oci://${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}/${{ github.run_number }}/manifest.json
+          subject-name: oci://${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}
           subject-digest: ${{ steps.build-and-push.outputs.digest }}
 
       - name: Attest integration tests report
         uses: actions/attest@v2
         with:
-          subject-name: oci://${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}/${{ github.run_number }}/manifest.json
+          subject-name: oci://${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}
           subject-digest: ${{ steps.build-and-push.outputs.digest }}
           predicate-type: "https://jfrog.com/security/attestation/test-report/v1"
           # predicate-path: "coverage/integration/itest-report.json"
