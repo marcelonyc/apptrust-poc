@@ -55,6 +55,7 @@ jobs:
           context: ./dvr-app
           push: true
           outputs: type=docker
+          tags: ${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
           build-args: ${{ env.BUILD_ARGS }}
 
       # - name: Push image to JFrog Artifactory
