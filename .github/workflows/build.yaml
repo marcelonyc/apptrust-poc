@@ -53,7 +53,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ./dvr-app
-          push: true
+          push: false
           outputs: type=docker
           tags: ${{ vars.JF_URL }}/${{ env.JF_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
           build-args: ${{ env.BUILD_ARGS }}
@@ -79,6 +79,10 @@ jobs:
           predicate-type: "https://jfrog.com/security/attestation/test-report/v1"
           # predicate-path: "coverage/integration/itest-report.json"
           predicate: "{}"
+
+      - name: Build Info Publish
+        run: |
+          jf rt bp ${JFROG_CLI_BUILD_NAME} ${JFROG_CLI_BUILD_NUMBER} --project=${JFROG_CLI_BUILD_PROJECT}
 
       - name: Build Summary
         run: |
