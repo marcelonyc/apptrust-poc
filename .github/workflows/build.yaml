@@ -119,7 +119,7 @@ jobs:
 
             curl -sS -L -X POST \
                 "https://${BASE}/applications/$APP_KEY/versions?async=false" \
-                -H "Authorization: Bearer ${{ steps.setup-jfrog-cli.outputs.oidc-token }} \
+                -H "Authorization: Bearer ${{ steps.setup-jfrog-cli.outputs.oidc-token }}" \
                 -H "Content-Type: application/json" \
                 -d "$APP_VERSION_PAYLOAD" \
                 --fail-with-body
