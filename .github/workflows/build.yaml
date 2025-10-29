@@ -86,7 +86,7 @@ jobs:
 
       - name: Publish App Version
         env:
-          BASE: https://${{ env.JF_URL }}/apptrust/api/v1
+          BASE: ${{ env.JF_URL }}/apptrust/api/v1
           APP_KEY: dvr-rental
           APP_VERSION: ${{ github.run_number }}
           ACTUAL_BUILD_NAME: ${{ env.JFROG_CLI_BUILD_NAME }}
