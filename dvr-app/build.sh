@@ -16,7 +16,7 @@
 source ~/.env_apptrust
 JF_PROJECT="dvr"
 APPLICATION_KEY="dvr-app"
-VERSION="1.0.0"  # CHANGE THIS TO CREATE A NEW VERSION
+VERSION="1.0.3"  # CHANGE THIS TO CREATE A NEW VERSION
 JFROG_CLI_BUILD_NAME='dvr-build'
 JFROG_CLI_BUILD_NUMBER=$VERSION
 JFROG_CLI_BUILD_PROJECT=$JF_PROJECT
@@ -54,8 +54,8 @@ jf evd create \
 --package-name ${IMAGE_NAME} \
 --package-version "${VERSION}" \
 --package-repo-name ${DOCKER_REPO} \
---predicate ./sign.json \
---predicate-type https://jfrog.com/evidence/signature/v1 \
+--predicate ./in-toto-test.json \
+--predicate-type https://in-toto.io/attestation/test-result/v0.1 \
 --key "${PRIVATE_KEY}" \
 --key-alias "evd" 
 

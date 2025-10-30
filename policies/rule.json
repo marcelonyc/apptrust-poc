@@ -1,7 +1,13 @@
 {
-    "description": "Allow to promote only if a predicate includes is_approved==true",
-    "name": "Any attestation contains  is_approved: true value in predicate rule",
+    "description": "Application must pass test",
+    "name": "Test evidence must exist on release",
     "is_custom": true,
-    "created_by": "",
-    "template_id": "1975536488393863168"
+    "created_by": "marcelol@jfrog.com",
+    "template_id": "1003",
+    "parameters": [
+        {
+            "name": "predicateType",
+            "value": "https://in-toto.io/attestation/test-result/v0.1"
+        }
+    ]
 }

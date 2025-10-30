@@ -1,8 +1,11 @@
 #!/bin/bash
 
+
 source ~/.env_apptrust
-curl -sS -L -X DELETE \
-    "${base_url}/rules/1983888445719744512"\
+rule=`cat rule.json`
+
+curl -sS -L -X GET \
+    "${base_url}/rules/1983154743520079872"\
     -H "Authorization: Bearer $JF_TOKEN" \
     -H "Content-Type: application/json" \
     --fail-with-body 
