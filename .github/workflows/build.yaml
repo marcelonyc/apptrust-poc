@@ -73,13 +73,13 @@ jobs:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: |
           jf evd create \
-           --package-name ${IMAGE_NAME} \
-           --package-version "${VERSION}" \
-           --package-repo-name ${DOCKER_REPO} \
-           --predicate dvr-app/sign.json \
-           --predicate-type https://jfrog.com/evidence/signature/v1 \
-           --key "${PRIVATE_KEY}" \
-           --key-alias "evd"
+          --package-name ${IMAGE_NAME} \
+          --package-version "${VERSION}" \
+          --package-repo-name ${DOCKER_REPO} \
+          --predicate ./in-toto-test.json \
+          --predicate-type https://in-toto.io/attestation/test-result/v0.1 \
+          --key "${PRIVATE_KEY}" \
+          --key-alias "evd"
 
       - name: Attest docker image
         uses: actions/attest-build-provenance@v2

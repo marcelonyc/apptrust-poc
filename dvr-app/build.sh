@@ -16,7 +16,7 @@
 source ~/.env_apptrust
 JF_PROJECT="dvr"
 APPLICATION_KEY="dvr-app"
-VERSION="1.0.3"  # CHANGE THIS TO CREATE A NEW VERSION
+VERSION="1.0.1"  # CHANGE THIS TO CREATE A NEW VERSION
 JFROG_CLI_BUILD_NAME='dvr-build'
 JFROG_CLI_BUILD_NUMBER=$VERSION
 JFROG_CLI_BUILD_PROJECT=$JF_PROJECT
@@ -29,7 +29,7 @@ IMAGE_NAME="dvr-app"
 
 jf config use ${JF_CLI_INSTANCE_ID}
 docker build -t ${IMAGE_NAME}:${VERSION} .
-docker login $JF_URL
+#docker login $JF_URL
 jf docker tag ${IMAGE_NAME}:${VERSION} ${JF_URL}${DOCKER_REPO}/${IMAGE_NAME}:${VERSION}
 jf rt docker-push --project ${JFROG_CLI_BUILD_PROJECT} \
  --build-name ${JFROG_CLI_BUILD_NAME} --build-number ${JFROG_CLI_BUILD_NUMBER} \
