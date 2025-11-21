@@ -1,4 +1,4 @@
-# apptrut-rego
+# apptrust-poc
 
 This project provides Rego policies and examples for application security and compliance.
 
@@ -10,8 +10,8 @@ This project provides Rego policies and examples for application security and co
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/your-org/apptrut-rego.git
-    cd apptrut-rego
+    git clone https://github.com/your-org/apptrust-poc.git
+    cd apptrut-poc
     ```
 
 ## JFrog Integration
