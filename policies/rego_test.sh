@@ -6,6 +6,7 @@
 REGO_POLICY="$1"
 ATTESTATIONS_JSON="$2"
 PARAMS_JSON="$3"
+DEBUG=${4:-false}
 
 if [[ -z "$REGO_POLICY" || -z "$ATTESTATIONS_JSON" ]]; then
     echo "Usage: $0 <rego_policy_file> <attestations_json_file> [params_json_file]"
@@ -27,4 +28,8 @@ fi
 
 # Run OPA test
 echo "OPA result:"
-opa eval --input <(echo "$INPUT_JSON") --data "$REGO_POLICY" 'data.curation.policies'
+if [ "$DEBUG" = true ] ; then
+    opa eval --input <(echo "$INPUT_JSON") --data "$REGO_POLICY" 'data.curation.policies' 
+else
+    opa eval --input <(echo "$INPUT_JSON") --data "$REGO_POLICY" 'data.curation.policies.allow'
+fi

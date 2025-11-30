@@ -22,7 +22,7 @@ has_approved_key := [evidence |
 ]
 
 exists if {
-	count(has_approved_key) > 0
+	count(has_approved_key) > to_number(inputs.params.tests_required)
 }
 
 allow := {
