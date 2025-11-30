@@ -71,19 +71,19 @@ This script helps you test Rego policies using OPA (Open Policy Agent) with samp
 Test a policy with attestation and parameters:
 
 ```sh
-./rego_test.sh regos/rego_policy_intoto.rego test/dvr-rental-34-Evidence.json test/params.json
+./rego_test.sh regos/rego_policy_intoto.rego test/dvr-rental-2.0.0-Evidence.json test/params.json
 ```
 
 Test a policy with only attestation:
 
 ```sh
-./rego_test.sh regos/rego_policy_intoto.rego test/dvr-rental-34-Evidence.json
+./rego_test.sh regos/rego_policy_intoto.rego test/dvr-rental-2.0.0-Evidence.json
 ```
 
 Debug mode (shows all policy data):
 
 ```sh
-./rego_test.sh regos/rego_policy_intoto.rego test/dvr-rental-34-Evidence.json test/params.json true
+./rego_test.sh regos/rego_policy_intoto.rego test/dvr-rental-2.0.0-Evidence.json test/params.json true
 ```
 
 ## Input Structure
