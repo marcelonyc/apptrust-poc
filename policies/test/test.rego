@@ -4,27 +4,33 @@ import rego.v1
 
 release := input.data
 
-release_evidence := [evidence | some evidence in release.evidenceConnection[_]]
+# release_evidence := [evidence | some evidence in release.evidenceConnection[_]]
 
 artifact_evidence := [evidence.node.evidenceConnection.edges[_] | some evidence in release.artifactsConnection[_]]
 
-build_evidence := [evidence.evidenceConnection[_][_] | some evidence in release.fromBuilds[_]]
+# build_evidence := [evidence.evidenceConnection[_][_] | some evidence in release.fromBuilds[_]]
 
-all_layers_evidences := array.concat(release_evidence, array.concat(artifact_evidence, build_evidence))
+# all_layers_evidences := array.concat(release_evidence, array.concat(artifact_evidence, build_evidence))
 
-default exists := false
 
-default has_approved_key := []
+default passed_tests_sufficient := false
 
-has_approved_key := [evidence | 
+passed_tests := [evidence.node.predicate.predicate.passedTests |
     some evidence in artifact_evidence
-    evidence.node.predicate.is_approved == true
+    evidence.node.predicateType == "https://in-toto.io/attestation/test-result/v0.1"
 ]
 
-exists if {
-	count(has_approved_key) > to_number(inputs.params.tests_required)
+passed_tests_sufficient if {
+    count(passed_tests[0]) > to_number(input.params.tests_required)
 }
 
 allow := {
-	"should_allow": exists
+	"should_allow": passed_tests_sufficient,
+    "passed_tests": count(passed_tests[0]),
+    "message": "Passed or not",
+    "explanation": {
+        "passed_tests": count(passed_tests[0]),
+        "required_tests": input.params.tests_required,
+        "tests": passed_tests[0]
+    }
 }
