@@ -1,0 +1,11 @@
+{
+    "name": "Custom value in predicate template",
+    "description": "This template looks for a specific key to have value true in all predicates",
+    "version": "1.0.0",
+    "data_source_type": "evidence",
+    "category": "workflow",
+    "is_custom": false,
+    "rego": "{{ rego_file: regos/rego_policy_simple.rego }}",
+    "created_by": "system",
+    "parameters": null
+}

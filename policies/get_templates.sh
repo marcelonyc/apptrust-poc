@@ -1,8 +1,7 @@
-#!/bin/bash -x
+#!/bin/bash
 
 
 source ~/.env_apptrust
-rule=`cat rule.json`
 
 curl -sS -L -X GET \
     "${base_url}/templates"\

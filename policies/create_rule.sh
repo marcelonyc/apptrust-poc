@@ -1,10 +1,11 @@
 #!/bin/bash
 
+RULES_FILE=${1}
 # READ !!!!!!!!!!!
 # This script requires the id of the template
 # You need to update it in rule.json
 source ~/.env_apptrust
-rule=`cat rule.json`
+rule=`cat ${RULES_FILE}`
 
 curl -sS -L -X POST \
     "${base_url}/rules"\

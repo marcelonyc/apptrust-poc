@@ -6,7 +6,7 @@ release := input.data
 
 release_evidence := [evidence | some evidence in release.evidenceConnection[_]]
 
-artifact_evidence := [evidence.node.evidenceConnection[_][_] | some evidence in release.artifactsConnection[_]]
+artifact_evidence := [evidence.node.evidenceConnection.edges[_] | some evidence in release.artifactsConnection[_]]
 
 build_evidence := [evidence.evidenceConnection[_][_] | some evidence in release.fromBuilds[_]]
 
@@ -18,7 +18,7 @@ default has_approved_key := []
 
 has_approved_key := [evidence | 
     some evidence in artifact_evidence
-    evidence.node.is_approved == true
+    evidence.node.predicate.is_approved == true
 ]
 
 exists if {
