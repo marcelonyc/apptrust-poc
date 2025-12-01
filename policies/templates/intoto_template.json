@@ -1,5 +1,5 @@
 {
-    "name": "Number of Tests Passed. V4",
+    "name": "Number of Tests Passed. V5",
     "description": "Evaluates the number of tests passed in an in-toto attestation.",
     "version": "1.0.0",
     "data_source_type": "evidence",
