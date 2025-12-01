@@ -27,4 +27,5 @@ exists if {
 
 allow := {
 	"should_allow": exists
+    "explanation": "Application not approved by change control"
 }

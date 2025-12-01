@@ -28,9 +28,6 @@ allow := {
 	"should_allow": passed_tests_sufficient,
     "passed_tests": count(passed_tests[0]),
     "message": "Passed or not",
-    "explanation": {
-        "passed_tests": count(passed_tests[0]),
-        "required_tests": input.params.tests_required,
-        "tests": passed_tests[0]
-    }
+    "explanation": concat(" ",["Required tests: ", input.params.tests_required])
+
 }
