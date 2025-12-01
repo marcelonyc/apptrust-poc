@@ -1,32 +1,40 @@
-***
-This script is used to create or update a template in AppTrust by replacing placeholders
-in a JSON template file with the content of a specified Rego file. The script reads
+
+
+## Table of Contents
+
+1. [Create Template](#create-template)
+  - [Command-line Arguments](#command-line-arguments)
+  - [Environment Variables](#environment-variables)
+  - [Usage](#usage)
+  - [Error Handling](#error-handling)
+2. [Rego Policy Testing with `rego_test.sh`](#rego-policy-testing-with-rego_testsh)
+  - [Prerequisites](#prerequisites)
+  - [Usage](#usage-1)
+  - [Example](#example)
+  - [Input Structure](#input-structure)
+  - [Output](#output)
+  - [Troubleshooting](#troubleshooting)
+  - [Customization](#customization)
+
+
+## Create Template
+
+This script is used to create or update a template in AppTrust by replacing placeholders in a JSON template file with the content of a specified Rego file. The script reads
 environment variables, processes the template, and sends HTTP requests to the AppTrust API.
-***
+
 
 
 ***UPDATE TEMPLATE NOT WORKING YET***
 
-Functions:
------------
-- create_or_update_template(base_url, JF_TOKEN, generated_template, template_id=None):
-    Sends an HTTP POST or PUT request to create or update a template in AppTrust.
-
-- log(type_, message):
-    Logs messages to the console with different severity levels (info, success, warning, error, log).
-
-- main(template_json_path, template_id=None):
-    Main function that orchestrates the process of reading the template, replacing placeholders,
-    and calling the create_or_update_template function.
-
 Command-line Arguments:
 ------------------------
-- --template_json_path: Path to the template JSON file.
-- --template_id: (Optional) ID of the template to update. If not provided, a new template will be created.
+* template_json_path: Path to the template JSON file.
+* template_id: (Optional - NOT OPERATIONAL YET) ID of the template to update. If not provided, a new template will be created.
 
 Environment Variables:
 -----------------------
 - base_url: Base URL of the AppTrust API.
+  https://\<JFrog URL>/unifiedpolicy/api/v1
 - JF_TOKEN: Authorization token for the AppTrust API.
 
 Usage:
@@ -46,7 +54,7 @@ Error Handling:
   - The Rego file placeholder is missing or the file cannot be read.
   - The HTTP request to the AppTrust API fails.
 
-# Rego Policy Testing with `rego_test.sh`
+## Rego Policy Testing with `rego_test.sh`
 
 This script helps you test Rego policies using OPA (Open Policy Agent) with sample attestation and parameter JSON files.
 
@@ -88,13 +96,19 @@ Debug mode (shows all policy data):
 
 ## Input Structure
 
-- **Attestation JSON**: Should match the expected structure for your policy (e.g., contains `releaseBundleVersion.getVersion` if referenced).
-- **Params JSON**: Should contain fields referenced in your policy, such as:
-  ```json
+**Attestation JSON**: 
+Should match the expected structure as presented by AppTrust. See example test/dvr-rental-2.0.2-Evidence.json.
+
+**Params JSON**: 
+Should contain fields referenced in your policy, such as:
+
+```json
   {
-    "tests_required": 2
+    "tests_required": "2"
   }
-  ```
+```
+
+Note: All parameters should be tested as strings. Convert the value inside your rego.
 
 ## Output
 
