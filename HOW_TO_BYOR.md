@@ -1,5 +1,7 @@
 # AppTrust/Unified Policy Artifacts Documentation
 
+## How to Bring Your Own Rego
+
 This repository contains artifacts, scripts, and examples for implementing "Bring Your Own Policy" using Rego within the JFrog AppTrust platform. Follow the workflow below to configure your environment, develop policies, test locally, and deploy rules.
 
 ## Environment Setup
