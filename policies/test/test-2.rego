@@ -26,7 +26,5 @@ passed_tests_sufficient if {
 
 allow := {
 	"should_allow": passed_tests_sufficient,
-    "passed_tests": count(passed_tests[0]),
-    "message": "Passed or not",
     "explanation": concat(" ",["Required tests: ", input.params.tests_required])
 }
