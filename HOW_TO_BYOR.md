@@ -23,7 +23,7 @@ To write effective policies, you must understand the structure of the JSON evide
 
 *   **Data Structure:** The input data typically contains three main connections: `evidenceConnection`, `artifactsConnection`, and `fromBuilds`.
 *   **The Predicate:** The core logic of your policy will rely on the `predicate`
-    *   **Important Nesting Detail:** The predicate is passed as the full schema. if you include predicate in your JSON, you will need to look for predicat.predicate to n the path
+    *   **Important Nesting Detail:** The predicate is passed as the full schema. if you include predicate in your JSON, you will need to look for predicat.predicate in the path
     *   **Arbitrary JSON:** The content inside the predicate is arbitrary JSON. While JFrog provides the signature wrapper, you must navigate the specific JSON structure inside the predicate to find the data you need.
 *   **Retrieving Sample Data:** To view the exact payload structure for your Rego input, export the evidence from an application in JFrog. This will provide the specific `artifactsConnection` or `fromBuilds` evidence needed for accurate testing.
 
