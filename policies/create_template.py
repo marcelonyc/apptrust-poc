@@ -60,7 +60,7 @@ def log(type_, message):
         sys.exit(1)
 
 
-def main(template_json_path, template_id=None):
+def main(template_json_path, template_id=None, verbose=False):
     # Load environment variables using python-dotenv
 
     env_path = os.path.expanduser("~/.env_apptrust")
@@ -99,6 +99,8 @@ def main(template_json_path, template_id=None):
     generated_template = template.replace(
         f"{{{{ rego_file: {rego_file_path} }}}}", rego_content
     )
+    if verbose:
+        log("info", f"Generated Template: {generated_template}")
 
     base_url = os.environ.get("base_url")
     JF_TOKEN = os.environ.get("JF_TOKEN")
@@ -119,10 +121,17 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
+        "--verbose",
+        "-v",
+        type=bool,
+        help="Enable verbose output.",
+    )
+
+    parser.add_argument(
         "--template_id",
         type=str,
         help="ID of the template to update. If not provided, a new template will be created.",
     )
     args = parser.parse_args()
 
-    main(args.template_json_path, args.template_id)
+    main(args.template_json_path, args.template_id, args.verbose)

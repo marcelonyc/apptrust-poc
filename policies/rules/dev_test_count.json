@@ -1,9 +1,9 @@
 {
     "description": "Dev Application must pass 3 tests to exit dev stage",
-    "name": "Dev Test count gt 2 on exit dev stage. V5",
+    "name": "dev-test-count-gt-2",
     "is_custom": true,
     "created_by": "marcelol@jfrog.com",
-    "template_id": "1995534352139681792",
+    "template_id": "2011463261561102336",
     "parameters": [
         {
             "name": "tests_required",
